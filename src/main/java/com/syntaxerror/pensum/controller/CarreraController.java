@@ -17,8 +17,14 @@ public class CarreraController {
     @Autowired
     private CarreraRepository repository;
 
+    // public CarreraController(CarreraRepository repository) {
+    //     this.repository = repository;
+    // }
+
     @Bean
     public CommandLineRunner initData() {
+        // Se agregaran las carreras al iniciar la aplicacion
+        // Al agregar nuevos borra el archivo .db y reinicia esta aplicacion
         return args -> {
             if (repository.count() == 0) {
                 repository.save(new Carrera("Ingeniería de Software", "Ingeniería"));
@@ -34,11 +40,17 @@ public class CarreraController {
 
     @GetMapping("/")
     public String index(Model model, @RequestParam(name="escuela", required=false) String escuela) {
-        if (escuela != null && !escuela.isEmpty()) {
+        // Get que trae las carreras de la base de datos
+        try {
+            if (escuela != null && !escuela.isEmpty()) {
             model.addAttribute("carreras", repository.findByEscuela(escuela));
-        } else {
+            } else {
             model.addAttribute("carreras", repository.findAll());
+            }
+        } catch (Exception e) {
+            IO.println("Ocurrió un error al accesar a la base de datos." + e.getMessage());
         }
+        
         return "index";
     } 
 }

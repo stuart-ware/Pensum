@@ -2,16 +2,21 @@ package com.syntaxerror.pensum.models;
 
 import jakarta.persistence.*;
 
+/*
+Clase equivalente a una tabla SQL
+Esta aplicacion se encargará de construir la tabla
+*/
 @Entity
 public class Carrera {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String nombre;
     private String escuela;
 
     public Carrera() {}
+
     public Carrera(String nombre, String escuela) {
         this.nombre = nombre;
         this.escuela = escuela;
@@ -24,15 +29,19 @@ public class Carrera {
     public long getId() {
         return id;
     }
+
     public String getNombre() {
         return nombre;
     }
+
     public void setEscuela(String escuela) {
         this.escuela = escuela;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
